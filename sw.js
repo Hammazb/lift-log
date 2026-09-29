@@ -1,5 +1,5 @@
 // Offline cache. Bump VERSION when you deploy a new index.html so phones pick it up.
-const VERSION = 'lift-log-v3';
+const VERSION = 'lift-log-v4';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
