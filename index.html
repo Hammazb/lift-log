@@ -35,6 +35,10 @@
   --series:#d7ff3f; --pr:#ff8a4c; --pr-soft:#3a2117; --pr-ink:#ff8a4c; --good:#a8e04a; --danger:#ff6b6b;
   color-scheme:dark;
 }
+/* iOS 26 installed web apps under-report the viewport height by the top safe area (about 62pt on iPhone 17 Pro Max), leaving a gap under fixed bars. 100lvh is correct there, so the difference is the gap. It is 0 everywhere else. */
+:root{--vgap:0px}
+@media (display-mode: standalone){:root{--vgap:calc(100lvh - 100dvh)}}
+html{min-height:100lvh}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.4;padding-inline:16px;padding-block:calc(12px + env(safe-area-inset-top,0px)) calc(176px + env(safe-area-inset-bottom,0px))}
 .wrap{max-width:760px;margin:0 auto}
@@ -47,7 +51,7 @@ button,input,select{font:inherit;color:inherit}
 .topr{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .themebtn[aria-pressed="true"]{border-color:var(--sel);background:var(--accent-soft)}
 .themebtn{background:var(--surface);border:1px solid var(--line2);border-radius:999px;padding:4px 10px;font:600 12px var(--f-body);color:var(--ink);cursor:pointer}
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:16;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
+.tabs{position:fixed;left:0;right:0;bottom:calc(-1 * var(--vgap));z-index:16;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}
 .tabs button{flex:1;max-width:120px;position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;padding:8px 0 2px;font:600 10.5px var(--f-body);color:var(--muted);cursor:pointer}
 .tabs::after{content:"";position:absolute;left:0;right:0;top:100%;height:240px;background:var(--surface)}
 .tabs button svg{width:22px;height:22px}
@@ -196,7 +200,7 @@ th{color:var(--muted);font-weight:500}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:10px}
 .mgrid label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
 .restbar[hidden]{display:none}
-.restbar{position:fixed;left:12px;right:12px;max-width:736px;margin-inline:auto;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:15;background:var(--accent);color:var(--accent-ink);border-radius:18px;box-shadow:inset 0 0 0 1.5px var(--accent-line),0 6px 16px rgba(0,0,0,.16);padding:8px 8px 8px 18px;display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
+.restbar{position:fixed;left:12px;right:12px;max-width:736px;margin-inline:auto;bottom:calc(76px + env(safe-area-inset-bottom,0px) - var(--vgap));z-index:15;background:var(--accent);color:var(--accent-ink);border-radius:18px;box-shadow:inset 0 0 0 1.5px var(--accent-line),0 6px 16px rgba(0,0,0,.16);padding:8px 8px 8px 18px;display:flex;align-items:center;gap:12px;flex-wrap:nowrap}
 .rmain{display:flex;flex-direction:column;min-width:0;flex:1 1 auto}
 .rlbl{font-size:12px;letter-spacing:.05em;text-transform:uppercase;opacity:.8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rmain b{font:800 32px/1 var(--f-display);font-variant-numeric:tabular-nums}
